@@ -1,0 +1,31 @@
+;
+; slack2mqtt.conf - for supervisord configuration file
+;
+; install
+;     $ pwd
+;     $ sudo cp slack2mqtt.conf.sample /etc/supervisor/conf.d/slack2mqtt.conf
+;     $ sudo vi /etc/supervisor/conf.d/slack2mqtt.conf
+;       (fix path, etc...)
+;     $ sudo supervisorctl reread
+;     $ sudo supervisorctl add slack2mqtt
+;     $ sudo supervisorctl status
+;     slack2mqtt        RUNNING    pid 8192, uptime 0:00:30
+;
+; see also
+;     Supervisor: A Process Control System
+;     http://supervisord.org/
+;
+[program:slack2mqtt]
+command         = /usr/bin/ruby slack2mqtt.rb
+directory       = /home/pi/work/slack2mqtt
+numprocs        = 1
+autostart       = true
+autorestart     = true
+user            = pi
+environment     = HOME=/home/pi/
+redirect_stderr = true
+stdout_logfile  = /home/pi/work/slack2mqtt/log.txt
+startsecs               = 1
+startretries            = 10
+stdout_logfile_maxbytes = 10MB
+stdout_logfile_backups = 1
